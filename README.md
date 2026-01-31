@@ -13,7 +13,7 @@
 - Blind + In-band SQLi через numeric response
 - Exfiltration через ASCII-based technique
 - Read-access до production DB
-- Superuser у PostgreSQL → file read
+- Superuser у PostgreSQL -> file read
 - Отриманий Kubernetes ServiceAccount token
 - Severity з боку вендора: **Low**
 - Реальний вплив: **Critical**
